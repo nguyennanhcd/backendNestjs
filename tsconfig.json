@@ -4,6 +4,7 @@
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
+    // you must config this to use decorators
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "target": "es2017",
