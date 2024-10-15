@@ -1,9 +1,13 @@
 import { Controller, Get, Render } from '@nestjs/common';
 import { AppService } from './app.service';
+import { ConfigService } from '@nestjs/config';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    private readonly configService: ConfigService,
+  ) {}
   // This method is a more concise version of the below method and this way can only used in ts
 
   // private readonly appService: AppService;
@@ -16,6 +20,8 @@ export class AppController {
   getHello() {
     const message = this.appService.getHello();
 
+    // in all files except main.ts, we use this
+    console.log(this.configService.get<string>('PORT'));
     return {
       message: message,
     };
