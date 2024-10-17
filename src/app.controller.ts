@@ -21,7 +21,6 @@ export class AppController {
     const message = this.appService.getHello();
 
     // in all files except main.ts, we use this
-    console.log(this.configService.get<string>('PORT'));
     return {
       message: message,
     };
