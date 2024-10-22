@@ -1,23 +1,14 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty } from 'class-validator';
 
-// data transfer object
+//data transfer object // class = { }
 export class CreateUserDto {
-  @IsEmail(
-    {},
-    {
-      message: 'You must fill in this field with a valid email address.',
-    },
-  )
-  @IsNotEmpty()
-  email: string;
+    @IsEmail({}, { message: 'Email không đúng định dạng', })
+    @IsNotEmpty({ message: 'Email không được để trống', })
+    email: string;
 
-  @IsString()
-  @IsNotEmpty()
-  password: string;
+    @IsNotEmpty({ message: 'Password không được để trống', })
+    password: string;
 
-  @IsString()
-  @IsNotEmpty()
-  name: string;
-
-  address: string;
+    name: string;
+    address: string;
 }
