@@ -1,13 +1,16 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 //data transfer object // class = { }
 export class CreateCompanyDto {
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Company name is required' })
+  @IsString({ message: 'Company name must be a string' })
   name: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Company address is required' })
+  @IsString({ message: 'Company address must be a string' })
   address: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Company description is required' })
+  @IsString({ message: 'Company address must be a string' })
   description: string;
 }
