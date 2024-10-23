@@ -21,9 +21,6 @@ export class CompaniesService {
         email: user.email,
       },
     });
-    console.log(user);
-    console.log(company);
-
     return company;
   }
 
@@ -35,8 +32,15 @@ export class CompaniesService {
     return `This action returns a #${id} company`;
   }
 
-  update(id: number, updateCompanyDto: UpdateCompanyDto) {
-    return `This action updates a #${id} company`;
+  async update(id: string, updateCompanyDto: UpdateCompanyDto, user: IUser) {
+    const updatedCompany = await this.companyModel.updateOne(
+      { _id: id },
+      { ...updateCompanyDto, updatedBy: { _id: user._id, email: user.email } },
+    );
+
+    return {
+      ...updatedCompany,
+    };
   }
 
   remove(id: number) {
