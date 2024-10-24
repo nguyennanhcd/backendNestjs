@@ -28,6 +28,7 @@ export class CompaniesService {
   async findAll(currentPage: number, limit: number, qs: string) {
     // Type casting inside a destructuring object.
     const { filter, sort, population } = aqp(qs);
+    // any operator in the query string will be stored in filter variable, for instance >= will be converted to $gte
     delete filter.page;
     delete filter.limit;
 
