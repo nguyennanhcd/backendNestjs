@@ -1,6 +1,5 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-//data transfer object // class = { }
 export class CreateCompanyDto {
   @IsNotEmpty({ message: 'Company name is required' })
   @IsString({ message: 'Company name must be a string' })
