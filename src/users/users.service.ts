@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { BadGatewayException, Injectable } from '@nestjs/common';
+import { CreateUserDto, RegisterUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './schemas/user.schema';
@@ -46,6 +46,34 @@ export class UsersService {
       _id: createdUser._id,
       createdAt: createdUser.createdAt,
     };
+  }
+
+  async register(user: RegisterUserDto) {
+    const { name, email, password, age, gender, address } = user;
+    const userRole: string = 'USER';
+
+    const isExist = await this.userModel.findOne({
+      email,
+    });
+
+    if (isExist) {
+      throw new BadGatewayException(
+        `Email ${email} can only be used to create one account. Please use a different email`,
+      );
+    }
+
+    const hashPassword = this.getHashPassword(password);
+    const registeredUser = await this.userModel.create({
+      name,
+      email,
+      password: hashPassword,
+      age,
+      gender,
+      address,
+      role: userRole,
+    });
+
+    return registeredUser;
   }
 
   async findAll(currentPage: number, limit: number, qs: string) {

@@ -6,6 +6,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from 'src/users/schemas/user.schema';
 import { Model } from 'mongoose';
 import { USER_MODEL_NAME } from 'src/users/users.constants';
+import { RegisterUserDto } from 'src/users/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -26,24 +27,12 @@ export class AuthService {
     return null;
   }
 
-  async register(registerUser: IRegisterUser) {
-    const { name, email, password, age, gender, address } = registerUser;
-    const userRole: string = 'USER';
-
-    const hashPassword = this.usersService.getHashPassword(password);
-    const registeredUser = await this.userModel.create({
-      name,
-      email,
-      password: hashPassword,
-      age,
-      gender,
-      address,
-      role: userRole,
-    });
+  async register(user: RegisterUserDto) {
+    let newUser = await this.usersService.register(user);
 
     return {
-      _id: registeredUser._id,
-      createdAt: registeredUser.createdAt,
+      _id: newUser?._id,
+      createdAt: newUser?.createdAt,
     };
   }
 

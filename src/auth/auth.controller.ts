@@ -10,7 +10,7 @@ import {
   Body,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { Public } from 'src/decorators/customize';
+import { Public, ResponseMessage } from 'src/decorators/customize';
 import { LocalAuthGuard } from './local-auth.guard';
 import { RegisterUserDto } from 'src/users/dto/create-user.dto';
 
@@ -20,6 +20,7 @@ export class AuthController {
 
   @Public()
   @Post('/register')
+  @ResponseMessage('Register a new user')
   handleRegister(@Body() registerUserDto: RegisterUserDto) {
     return this.authService.register(registerUserDto);
   }
